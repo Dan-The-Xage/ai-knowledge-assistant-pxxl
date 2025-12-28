@@ -1,8 +1,10 @@
-# AI Knowledge Assistant - Pxxl.app Frontend
+# AI Knowledge Assistant - Pxxl.app Deployment
 
-**Frontend-only deployment branch for Pxxl.app**
+**Dedicated repository for Pxxl.app deployment**
 
-This branch contains only the Next.js frontend application configured for deployment on Pxxl.app with Supabase backend and Hugging Face AI integration.
+This repository contains only the Next.js frontend application configured for clean deployment on Pxxl.app with Supabase backend and Hugging Face AI integration.
+
+**🚀 Ready for immediate Pxxl.app deployment - no configuration confusion!**
 
 ## 🚀 Features
 
@@ -42,15 +44,17 @@ This branch is specifically configured for **Pxxl.app deployment**.
 3. **Pxxl.app Account**: Ready for deployment
 
 ### Quick Deploy
-1. **Connect Repository**: Link this `pxxl-deployment` branch to Pxxl.app
-2. **Auto-Detection**: Pxxl.app detects Docker configuration
-3. **Set Environment Variables**:
+1. **Create GitHub Repository**: Create a new public repository on GitHub
+2. **Push This Code**: Push this repository to GitHub
+3. **Connect to Pxxl.app**: Link the GitHub repository to Pxxl.app
+4. **Auto-Detection**: Pxxl.app automatically detects Docker + Next.js
+5. **Set Environment Variables**:
    ```
-   NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-   NEXT_PUBLIC_HF_API_TOKEN=your-huggingface-token
+   NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
+   NEXT_PUBLIC_HF_API_TOKEN=hf_xxxxxxxxxxxxxxxxxx
    ```
-4. **Deploy**: Click deploy and wait for completion
+6. **Deploy**: Click deploy and wait for completion
 
 ### Documentation
 See `PXXL_SUPABASE_DEPLOYMENT.md` for detailed deployment instructions.
