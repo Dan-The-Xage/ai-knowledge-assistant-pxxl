@@ -1,21 +1,15 @@
 {
-  "name": "ai-knowledge-assistant",
+  "name": "ai-knowledge-assistant-pxxl",
   "version": "1.0.0",
-  "description": "AI-powered knowledge assistant platform",
-  "main": "backend/app/main.py",
-  "scripts": {
-    "start": "supervisord -c docker/supervisord.conf"
-  },
+  "description": "AI-powered knowledge assistant platform - Pxxl.app deployment",
   "engines": {
-    "node": "18.x",
-    "python": "3.11.x"
+    "node": "18.x"
   },
   "env": {
-    "NODE_ENV": "production",
-    "DEBUG": "false"
+    "NODE_ENV": "production"
   },
   "build": {
-    "dockerfile": "Dockerfile.pxxl-frontend",
+    "dockerfile": "Dockerfile.pxxl",
     "context": "."
   },
   "services": {
