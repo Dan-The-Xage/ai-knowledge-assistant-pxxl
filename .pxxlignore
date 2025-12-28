@@ -1,0 +1,10 @@
+# Ignore TypeScript files to force Docker detection
+frontend/src/
+frontend/*.json
+frontend/*.js
+frontend/*.ts
+*.tsx
+*.ts
+node_modules/
+.git/
+.gitignore
