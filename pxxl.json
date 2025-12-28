@@ -1,0 +1,27 @@
+{
+  "name": "ai-knowledge-assistant",
+  "version": "1.0.0",
+  "description": "AI-powered knowledge assistant platform",
+  "main": "backend/app/main.py",
+  "scripts": {
+    "start": "supervisord -c docker/supervisord.conf"
+  },
+  "engines": {
+    "node": "18.x",
+    "python": "3.11.x"
+  },
+  "env": {
+    "NODE_ENV": "production",
+    "DEBUG": "false"
+  },
+  "build": {
+    "dockerfile": "Dockerfile.pxxl-frontend",
+    "context": "."
+  },
+  "services": {
+    "frontend": {
+      "port": 3000,
+      "health": "/api/health"
+    }
+  }
+}
