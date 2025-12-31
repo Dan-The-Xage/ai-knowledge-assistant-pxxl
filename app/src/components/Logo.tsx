@@ -30,3 +30,4 @@ export const Logo = ({ className = "h-10", showText = true }: LogoProps) => {
     </div>
   );
 };
+
