@@ -37,5 +37,5 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
     CMD curl -f http://localhost:3000/api/health || exit 1
 
-# Start the Next.js application
-CMD ["npm", "start"]
+# Start the Next.js application (standalone mode)
+CMD ["node", ".next/standalone/server.js"]
