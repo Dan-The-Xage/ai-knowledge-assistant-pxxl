@@ -18,6 +18,11 @@ const nextConfig = {
     ignoreBuildErrors: false,
   },
 
+  // Disable experimental app directory to use pages router
+  experimental: {
+    appDir: false,
+  },
+
   // Webpack configuration for path aliases
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     // Add path aliases
