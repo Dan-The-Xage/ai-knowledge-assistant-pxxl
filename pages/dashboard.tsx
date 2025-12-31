@@ -9,10 +9,10 @@ import {
   ClockIcon,
   ArrowRightIcon
 } from '@heroicons/react/24/outline';
-import { User } from '../types/api';
-import Layout from '../components/Layout';
-import { projectAPI, conversationAPI } from '../../services/api';
-import { formatDate } from '../utils/format';
+import { User } from '../app/src/types/api';
+import Layout from '../app/src/components/Layout';
+import { projectAPI, conversationAPI } from '../app/src/services/api';
+import { formatDate } from '../app/src/utils/format';
 
 interface DashboardProps {
   user: User | null;
@@ -177,4 +177,5 @@ export default function DashboardPage({ user, onUserChange }: DashboardProps) {
     </Layout>
   );
 }
+
 

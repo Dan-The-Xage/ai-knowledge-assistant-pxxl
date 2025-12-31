@@ -23,7 +23,7 @@ RUN npm ci --only=production
 # Copy application source, pages, and public files
 COPY app/ ./app/
 COPY pages/ ./pages/
-COPY public/ ./public/
+COPY app/public/ ./public/
 
 # Build the Next.js application
 RUN npm run build

@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { PlusIcon, FolderIcon, UsersIcon } from '@heroicons/react/24/outline';
-import { User, Project } from '../types/api';
-import { projectAPI } from '../../services/api';
-import { formatDate } from '../utils/format';
-import Layout from '../components/Layout';
+import { User, Project } from '../app/src/types/api';
+import { projectAPI } from '../app/src/services/api';
+import { formatDate } from '../app/src/utils/format';
+import Layout from '../app/src/components/Layout';
 import toast from 'react-hot-toast';
 
 interface ProjectsPageProps {
@@ -138,4 +138,5 @@ export default function ProjectsPage({ user, onUserChange }: ProjectsPageProps) 
     </Layout>
   );
 }
+
 

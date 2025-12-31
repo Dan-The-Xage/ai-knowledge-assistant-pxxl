@@ -2,14 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { User } from '../types/api';
-import Layout from '../components/Layout';
-import AddUserModal from '../components/AddUserModal';
-import EditUserModal from '../components/EditUserModal';
-import { adminAPI, handleApiError } from '../../services/api';
+import { User } from '../app/src/types/api';
+import Layout from '../app/src/components/Layout';
+import AddUserModal from '../app/src/components/AddUserModal';
+import EditUserModal from '../app/src/components/EditUserModal';
+import { adminAPI, handleApiError } from '../app/src/services/api';
 import toast, { Toaster } from 'react-hot-toast';
 import { UserPlusIcon, MagnifyingGlassIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { formatDate } from '../utils/format';
+import { formatDate } from '../app/src/utils/format';
 
 interface UserManagementProps {
   user: User | null;
@@ -267,4 +267,5 @@ export default function UserManagementPage({ user, onUserChange }: UserManagemen
     </Layout>
   );
 }
+
 

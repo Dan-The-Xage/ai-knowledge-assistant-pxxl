@@ -1,7 +1,7 @@
-import '../styles/globals.css';
+import '../app/src/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { useState, useEffect } from 'react';
-import { User } from '../types/api';
+import { User } from '../app/src/types/api';
 
 export default function App({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState<User | null>(null);
@@ -51,4 +51,5 @@ export default function App({ Component, pageProps }: AppProps) {
     />
   );
 }
+
 
