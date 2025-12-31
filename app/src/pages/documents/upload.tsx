@@ -10,11 +10,11 @@ import {
   CheckCircleIcon,
   ExclamationTriangleIcon,
 } from '@heroicons/react/24/outline';
-import { User, Project, Document } from '@/types/api';
-import { documentAPI, projectAPI } from '@/services/api';
-import { handleApiError } from '@/services/api';
-import { formatFileSize, getFileIcon } from '@/utils/format';
-import Layout from '@/components/Layout';
+import { User, Project, Document } from '../types/api';
+import { documentAPI, projectAPI } from '../../services/api';
+import { handleApiError } from '../../services/api';
+import { formatFileSize, getFileIcon } from '../utils/format';
+import Layout from '../components/Layout';
 import toast, { Toaster } from 'react-hot-toast';
 
 interface UploadPageProps {
@@ -345,3 +345,4 @@ export default function UploadPage({ user, onUserChange }: UploadPageProps) {
     </Layout>
   );
 }
+

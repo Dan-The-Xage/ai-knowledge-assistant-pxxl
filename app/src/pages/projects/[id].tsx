@@ -9,10 +9,10 @@ import {
   PlusIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
-import { User, Project } from '@/types/api';
-import { projectAPI, documentAPI, handleApiError } from '@/services/api';
-import { formatDate } from '@/utils/format';
-import Layout from '@/components/Layout';
+import { User, Project } from '../../types/api';
+import { projectAPI, documentAPI, handleApiError } from '../../services/api';
+import { formatDate } from '../../utils/format';
+import Layout from '../../components/Layout';
 import toast, { Toaster } from 'react-hot-toast';
 
 interface ProjectDetailPageProps {

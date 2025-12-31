@@ -1,9 +1,9 @@
 import { Fragment, useState, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { adminAPI, handleApiError } from '@/services/api';
+import { adminAPI, handleApiError } from '../services/api';
 import toast from 'react-hot-toast';
-import { User } from '@/types/api';
+import { User } from '../types/api';
 
 interface EditUserModalProps {
   isOpen: boolean;
@@ -289,3 +289,4 @@ export default function EditUserModal({ isOpen, onClose, user, onUserUpdated, cu
     </Transition>
   );
 }
+

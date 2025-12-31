@@ -1,15 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Configure the app directory (moved from frontend/)
-  experimental: {
-    appDir: 'app',
-  },
-
   // Output standalone for Docker deployment
   output: 'standalone',
-
-  // Disable telemetry
-  telemetry: false,
 
   // Environment variables
   env: {
@@ -19,6 +11,22 @@ const nextConfig = {
   // Image optimization
   images: {
     unoptimized: true, // Disable image optimization for Docker
+  },
+
+  // TypeScript strict mode
+  typescript: {
+    ignoreBuildErrors: false,
+  },
+
+  // Webpack configuration for path aliases
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    // Add path aliases
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': require('path').resolve(__dirname, 'app/src'),
+    };
+
+    return config;
   },
 }
 

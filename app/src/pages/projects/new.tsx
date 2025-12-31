@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeftIcon, UserIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { User } from '@/types/api';
-import { projectAPI, adminAPI, handleApiError } from '@/services/api';
-import Layout from '@/components/Layout';
+import { User } from '../types/api';
+import { projectAPI, adminAPI, handleApiError } from '../../services/api';
+import Layout from '../components/Layout';
 import toast, { Toaster } from 'react-hot-toast';
 
 interface NewProjectPageProps {
@@ -256,4 +256,5 @@ export default function NewProjectPage({ user, onUserChange }: NewProjectPagePro
     </Layout>
   );
 }
+
 

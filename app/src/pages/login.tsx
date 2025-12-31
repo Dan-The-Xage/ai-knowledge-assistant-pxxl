@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { authAPI, handleApiError, setAuthToken } from '@/services/api';
+import { authAPI, handleApiError, setAuthToken } from '../../services/api';
 import toast, { Toaster } from 'react-hot-toast';
-import { User } from '@/types/api';
-import { Logo } from '@/components/Logo';
+import { User } from '../types/api';
+import { Logo } from '../components/Logo';
 
 interface LoginPageProps {
   onUserChange: (user: User) => void;
@@ -176,3 +176,4 @@ export default function LoginPage({ onUserChange }: LoginPageProps) {
     </div>
   );
 }
+

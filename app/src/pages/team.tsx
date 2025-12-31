@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { UserIcon, EnvelopeIcon, BriefcaseIcon } from '@heroicons/react/24/outline';
-import { User } from '@/types/api';
-import Layout from '@/components/Layout';
-import { adminAPI } from '@/services/api';
+import { User } from '../types/api';
+import Layout from '../components/Layout';
+import { adminAPI } from '../../services/api';
 import toast from 'react-hot-toast';
 
 interface TeamPageProps {
@@ -116,3 +116,4 @@ export default function TeamPage({ user, onUserChange }: TeamPageProps) {
     </Layout>
   );
 }
+

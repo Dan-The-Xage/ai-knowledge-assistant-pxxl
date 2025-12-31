@@ -12,11 +12,11 @@ import {
   ArrowDownTrayIcon,
   EyeIcon,
 } from '@heroicons/react/24/outline';
-import { User, Document, Project } from '@/types/api';
-import { documentAPI, projectAPI } from '@/services/api';
-import { handleApiError } from '@/services/api';
-import { formatFileSize, formatDate, getFileIcon, getProcessingStatusColor } from '@/utils/format';
-import Layout from '@/components/Layout';
+import { User, Document, Project } from '../types/api';
+import { documentAPI, projectAPI } from '../../services/api';
+import { handleApiError } from '../../services/api';
+import { formatFileSize, formatDate, getFileIcon, getProcessingStatusColor } from '../utils/format';
+import Layout from '../components/Layout';
 import toast, { Toaster } from 'react-hot-toast';
 
 interface DocumentsPageProps {
@@ -357,4 +357,5 @@ export default function DocumentsPage({ user, onUserChange }: DocumentsPageProps
     </Layout>
   );
 }
+
 

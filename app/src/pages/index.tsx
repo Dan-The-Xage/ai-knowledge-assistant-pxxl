@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { User } from '@/types/api';
+import { User } from '../types/api';
 
 interface HomePageProps {
   user: User | null;
@@ -30,3 +30,4 @@ export default function HomePage({ user, onUserChange }: HomePageProps) {
     </div>
   );
 }
+

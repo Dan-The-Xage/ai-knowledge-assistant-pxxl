@@ -12,11 +12,11 @@ import {
   XMarkIcon,
   CheckCircleIcon,
 } from '@heroicons/react/24/outline';
-import { User, Conversation, Message, Project } from '@/types/api';
-import { conversationAPI, projectAPI, documentAPI } from '@/services/api';
-import { handleApiError } from '@/services/api';
-import { formatDate, formatConfidenceScore } from '@/utils/format';
-import Layout from '@/components/Layout';
+import { User, Conversation, Message, Project } from '../types/api';
+import { conversationAPI, projectAPI, documentAPI } from '../../services/api';
+import { handleApiError } from '../../services/api';
+import { formatDate, formatConfidenceScore } from '../utils/format';
+import Layout from '../components/Layout';
 import toast, { Toaster } from 'react-hot-toast';
 
 interface AvailableDocument {
@@ -632,3 +632,4 @@ export default function ChatPage({ user, onUserChange }: ChatPageProps) {
     </Layout>
   );
 }
+
