@@ -20,8 +20,9 @@ COPY postcss.config.js ./
 # Install dependencies
 RUN npm ci --only=production
 
-# Copy application source and public files
+# Copy application source, pages, and public files
 COPY app/ ./app/
+COPY pages/ ./pages/
 COPY public/ ./public/
 
 # Build the Next.js application
