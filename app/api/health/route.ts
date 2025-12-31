@@ -1,18 +1,11 @@
+import { NextRequest, NextResponse } from 'next/server';
+
 /**
  * Health Check API Endpoint
  * Used by Pxxl.app for deployment health checks
  */
 
-import type { NextApiRequest, NextApiResponse } from 'next';
-
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
+export async function GET(request: NextRequest) {
   try {
     // Basic health check
     const healthData = {
@@ -30,13 +23,13 @@ export default async function handler(
       }
     };
 
-    return res.status(200).json(healthData);
+    return NextResponse.json(healthData, { status: 200 });
   } catch (error) {
     console.error('Health check error:', error);
-    return res.status(500).json({
+    return NextResponse.json({
       status: 'unhealthy',
       error: 'Health check failed',
       timestamp: new Date().toISOString(),
-    });
+    }, { status: 500 });
   }
 }
