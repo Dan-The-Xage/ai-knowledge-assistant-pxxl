@@ -7,6 +7,7 @@ export interface AIResponse {
   success: boolean;
   data?: any;
   error?: string;
+  fallback?: string;
 }
 
 export interface DocumentChunk {
@@ -34,7 +35,7 @@ class AIService {
       if (!this.hfToken) {
         return {
           success: false,
-          error: 'AI service not configured. Please check API token.'
+          error: 'AI service not configured. Please check NEXT_PUBLIC_HF_API_TOKEN environment variable in Pxxl.app.'
         };
       }
 
@@ -111,9 +112,24 @@ Answer based only on the provided context. Be concise but helpful. [/INST]`;
 
     } catch (error) {
       console.error('AI service error:', error);
+
+      // Provide more specific error messages
+      let errorMessage = 'Unknown error occurred';
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        errorMessage = 'Network error: Unable to connect to AI service. This may be due to CORS restrictions or network connectivity issues. Please check that NEXT_PUBLIC_HF_API_TOKEN is set in Pxxl.app environment variables.';
+      } else if (error instanceof Error) {
+        errorMessage = `AI service error: ${error.message}`;
+      }
+
+      // Provide a fallback helpful response
+      const fallbackResponse = context
+        ? `I apologize, but I'm currently unable to generate an AI response due to a technical issue. However, I can see you have document context available. Please try again in a moment, or feel free to ask specific questions about your documents.`
+        : `I apologize, but I'm currently experiencing technical difficulties connecting to the AI service. Please try again in a moment, or check that the application is properly configured.`;
+
       return {
         success: false,
-        error: `Network error: ${error instanceof Error ? error.message : 'Unknown error'}`
+        error: errorMessage,
+        fallback: fallbackResponse
       };
     }
   }
@@ -233,6 +249,25 @@ Keywords: [/INST]`;
     } catch {
       return false;
     }
+  }
+
+  /**
+   * Get service status and diagnostics
+   */
+  getStatus(): { configured: boolean; tokenPresent: boolean; message: string } {
+    const tokenPresent = !!this.hfToken;
+    const configured = tokenPresent && this.hfToken.length > 10;
+
+    let message = '';
+    if (!tokenPresent) {
+      message = 'Hugging Face API token not found. Please set NEXT_PUBLIC_HF_API_TOKEN in Pxxl.app environment variables.';
+    } else if (!configured) {
+      message = 'Hugging Face API token appears to be invalid or too short.';
+    } else {
+      message = 'AI service appears to be configured correctly.';
+    }
+
+    return { configured, tokenPresent, message };
   }
 }
 

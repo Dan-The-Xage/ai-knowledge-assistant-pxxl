@@ -367,7 +367,8 @@ export const conversationAPI = {
     if (aiResponse.success) {
       responseContent = aiResponse.data?.response || 'I apologize, but I could not generate a response.';
     } else {
-      responseContent = `I apologize, but there was an error: ${aiResponse.error}`;
+      // Use fallback response if available, otherwise show error
+      responseContent = aiResponse.fallback || `I apologize, but there was an error: ${aiResponse.error}`;
     }
 
     // Save AI response
