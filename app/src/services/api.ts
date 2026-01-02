@@ -3,6 +3,10 @@ export { supabaseService } from './supabaseService';
 export { aiService } from './aiService';
 export type { User, Document, Conversation, Message } from './supabaseService';
 
+// Import the services for internal use
+import { supabaseService } from './supabaseService';
+import { aiService } from './aiService';
+
 // Legacy API compatibility layer
 // This provides backward compatibility while we migrate to the new services
 
