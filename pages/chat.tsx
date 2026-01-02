@@ -133,7 +133,7 @@ export default function ChatPage({ user, onUserChange }: ChatPageProps) {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await conversationAPI.uploadDocument(currentConversation.id, formData);
+      const response = await conversationAPI.uploadDocument(currentConversation.id, formData, user?.id, user?.email);
       const result = response.data;
 
       if (result.status === 'completed' || result.status === 'existing') {

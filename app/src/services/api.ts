@@ -389,19 +389,32 @@ export const conversationAPI = {
   },
 
   // Upload document directly in chat
-  uploadDocument: async (conversationId: string, formData: FormData) => {
+  uploadDocument: async (conversationId: string, formData: FormData, userId?: string, userEmail?: string) => {
     const file = formData.get('file') as File;
-    const user = await supabaseService.getCurrentUser();
 
-    if (!user?.user || !user?.profile) {
+    // If userId and userEmail are provided (from component), use them
+    // Otherwise try to get from Supabase auth
+    let currentUserId = userId;
+    let currentUserEmail = userEmail;
+
+    if (!currentUserId || !currentUserEmail) {
+      const user = await supabaseService.getCurrentUser();
+      if (!user?.user || !user?.profile) {
+        throw new Error('Not authenticated');
+      }
+      currentUserId = user.user.id;
+      currentUserEmail = user.profile.email || user.user.email || '';
+    }
+
+    if (!currentUserId || !currentUserEmail) {
       throw new Error('Not authenticated');
     }
 
     // Upload file to Supabase Storage
     const document = await supabaseService.uploadFile(
       file,
-      user.user.id,
-      user.profile.email || user.user.email || ''
+      currentUserId,
+      currentUserEmail
     );
 
     // Extract text from file
