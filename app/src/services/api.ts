@@ -389,8 +389,44 @@ export const conversationAPI = {
   },
 
   // Upload document directly in chat
-  uploadDocument: async (conversationId: number, formData: FormData) => {
-    throw new Error('Upload document in chat not implemented yet');
+  uploadDocument: async (conversationId: string, formData: FormData) => {
+    const file = formData.get('file') as File;
+    const user = await supabaseService.getCurrentUser();
+
+    if (!user?.user || !user?.profile) {
+      throw new Error('Not authenticated');
+    }
+
+    // Upload file to Supabase Storage
+    const document = await supabaseService.uploadFile(
+      file,
+      user.user.id,
+      user.profile.email || user.user.email || ''
+    );
+
+    // Extract text from file
+    const extractedText = await extractTextFromFile(file);
+
+    // Generate embedding using AI service
+    const embeddingResult = await aiService.generateEmbeddings(extractedText);
+
+    if (embeddingResult.success) {
+      // Update document with AI-processed data
+      await supabaseService.updateDocumentWithAI(
+        document.id,
+        extractedText,
+        embeddingResult.data.embedding
+      );
+    }
+
+    return {
+      data: {
+        document_id: document.id,
+        filename: file.name,
+        status: 'completed',
+        message: 'Document uploaded and ready for chat'
+      }
+    };
   },
 };
 
