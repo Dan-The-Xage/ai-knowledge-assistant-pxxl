@@ -1,0 +1,242 @@
+{
+  "name": "AI Knowledge Assistant",
+  "version": "1.0.0",
+  "description": "Production-ready AI-powered knowledge assistant with RBAC",
+
+  "pxxl": {
+    "runtime": "nodejs",
+    "version": "18",
+    "buildCommand": "npm ci && npm run build",
+    "startCommand": "npm start",
+    "port": 3000,
+    "healthCheck": "/api/health",
+    "environment": {
+      "NODE_ENV": "production",
+      "NEXT_PUBLIC_APP_NAME": "AI Knowledge Assistant"
+    }
+  },
+
+  "requiredEnvironmentVariables": {
+    "NEXT_PUBLIC_SUPABASE_URL": {
+      "description": "Supabase project URL",
+      "example": "https://your-project-id.supabase.co",
+      "required": true,
+      "validation": "^https://[a-z0-9-]+\\.supabase\\.co$"
+    },
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": {
+      "description": "Supabase anonymous/public key",
+      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+      "required": true,
+      "validation": "^eyJ[a-zA-Z0-9_-]+\\.[a-zA-Z0-9_-]+\\.[a-zA-Z0-9_-]+$"
+    },
+    "NEXT_PUBLIC_HF_API_TOKEN": {
+      "description": "Hugging Face API token for AI services",
+      "example": "hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "required": true,
+      "validation": "^hf_[a-f0-9]{40}$"
+    }
+  },
+
+  "optionalEnvironmentVariables": {
+    "NEXT_PUBLIC_MAX_FILE_SIZE": {
+      "description": "Maximum file size for uploads (bytes)",
+      "default": "10485760",
+      "validation": "^\\d+$"
+    },
+    "NEXT_PUBLIC_CHUNK_SIZE": {
+      "description": "Text chunk size for processing",
+      "default": "1000",
+      "validation": "^\\d+$"
+    },
+    "NEXT_PUBLIC_MAX_RETRIEVAL_DOCS": {
+      "description": "Maximum documents to retrieve for context",
+      "default": "5",
+      "validation": "^\\d+$"
+    }
+  },
+
+  "supabase": {
+    "requiredExtensions": [
+      "uuid-ossp",
+      "vector"
+    ],
+    "requiredTables": [
+      "users",
+      "documents",
+      "conversations",
+      "messages",
+      "conversation_documents",
+      "audit_logs",
+      "system_stats"
+    ],
+    "requiredBuckets": [
+      {
+        "name": "documents",
+        "public": false,
+        "file_size_limit": 10485760,
+        "allowed_mime_types": [
+          "application/pdf",
+          "application/msword",
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          "text/plain",
+          "application/vnd.ms-excel",
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        ]
+      }
+    ],
+    "requiredRLSPolicies": true,
+    "requiredTriggers": [
+      "on_auth_user_created",
+      "update_users_updated_at",
+      "update_documents_updated_at",
+      "update_conversations_updated_at"
+    ]
+  },
+
+  "rbac": {
+    "roles": [
+      {
+        "name": "super_admin",
+        "description": "Full system access",
+        "permissions": ["all"],
+        "canManageUsers": true,
+        "canViewAllData": true,
+        "canAccessAdminPanel": true
+      },
+      {
+        "name": "admin",
+        "description": "Administrative access",
+        "permissions": ["manage_users", "view_reports", "manage_content"],
+        "canManageUsers": true,
+        "canViewAllData": false,
+        "canAccessAdminPanel": true
+      },
+      {
+        "name": "user",
+        "description": "Standard user access",
+        "permissions": ["upload_documents", "chat", "manage_own_content"],
+        "canManageUsers": false,
+        "canViewAllData": false,
+        "canAccessAdminPanel": false
+      },
+      {
+        "name": "guest",
+        "description": "Limited read-only access",
+        "permissions": ["read_public_content"],
+        "canManageUsers": false,
+        "canViewAllData": false,
+        "canAccessAdminPanel": false
+      }
+    ],
+    "enforcement": {
+      "frontend": "Component-level checks",
+      "backend": "RLS policies + API validation",
+      "storage": "Supabase storage policies"
+    }
+  },
+
+  "ai": {
+    "provider": "Hugging Face",
+    "models": {
+      "chat": {
+        "name": "mistralai/Mistral-7B-Instruct-v0.2",
+        "purpose": "Conversational AI responses",
+        "maxTokens": 512,
+        "temperature": 0.3
+      },
+      "embeddings": {
+        "name": "BAAI/bge-small-en-v1.5",
+        "purpose": "Document embeddings for semantic search",
+        "dimensions": 384
+      }
+    },
+    "features": {
+      "documentProcessing": true,
+      "semanticSearch": true,
+      "contextAwareResponses": true,
+      "fallbackResponses": true
+    }
+  },
+
+  "features": {
+    "authentication": {
+      "provider": "Supabase Auth",
+      "methods": ["email/password"],
+      "sessionManagement": "localStorage + Supabase",
+      "autoRefresh": true
+    },
+    "fileUpload": {
+      "supportedFormats": ["PDF", "DOCX", "TXT", "XLSX"],
+      "maxSize": "10MB",
+      "storage": "Supabase Storage",
+      "processing": "Client-side text extraction + AI embeddings"
+    },
+    "chat": {
+      "realTime": false,
+      "contextWindow": "Last 5 messages + relevant documents",
+      "aiIntegration": "Direct Hugging Face API calls",
+      "messageHistory": "Persistent in database"
+    },
+    "userManagement": {
+      "roles": true,
+      "bulkOperations": true,
+      "userProfiles": true,
+      "activityLogging": true
+    },
+    "adminPanel": {
+      "userManagement": true,
+      "systemStats": true,
+      "auditLogs": true,
+      "contentModeration": false
+    }
+  },
+
+  "security": {
+    "authentication": "Supabase Auth with JWT",
+    "authorization": "RBAC with RLS policies",
+    "dataProtection": "Encrypted storage and transmission",
+    "auditLogging": "All admin actions logged",
+    "rateLimiting": "Hugging Face API limits apply",
+    "cors": "Configured for Pxxl.app domain"
+  },
+
+  "performance": {
+    "optimization": {
+      "codeSplitting": "Next.js automatic",
+      "imageOptimization": "Next.js built-in",
+      "caching": "Browser + CDN",
+      "databaseIndexes": "Optimized for queries",
+      "vectorIndexes": "pgvector IVFFlat"
+    },
+    "monitoring": {
+      "healthChecks": "/api/health endpoint",
+      "errorTracking": "Console logging",
+      "performanceMetrics": "System stats table"
+    }
+  },
+
+  "deployment": {
+    "platform": "Pxxl.app",
+    "buildProcess": "Next.js static generation",
+    "runtime": "Node.js 18",
+    "scaling": "Automatic",
+    "backups": "Supabase managed",
+    "monitoring": "Pxxl.app dashboard"
+  },
+
+  "testing": {
+    "unitTests": "Not implemented",
+    "integrationTests": "Manual testing via test-full-system.js",
+    "e2eTests": "Not implemented",
+    "performanceTests": "Manual via browser dev tools",
+    "securityTests": "RLS policy validation"
+  },
+
+  "maintenance": {
+    "updates": "Manual deployment via GitHub",
+    "backups": "Supabase automatic",
+    "monitoring": "Application logs + health checks",
+    "support": "GitHub issues",
+    "documentation": "README.md + inline comments"
+  }
+}
